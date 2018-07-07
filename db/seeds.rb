@@ -5,5 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = CreateAdminService.new.call
-puts 'CREATED ADMIN USER: ' << user.email
+#
+require 'faker'
+
+10.times do
+  name = Faker::Name.unique.name
+  user = User.create(name: name, email: Faker::Internet.email, password: 'password', subscription: Subscription.new)
+  user.subscription.update(discount: Discount.new)
+  puts user.name
+  puts user.subscription.name
+  puts user.subscription.discount.amount
+end
